@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +16,14 @@ import android.util.Log;
 import android.widget.TextView;
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.utils.StreamUtil;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+
 import org.json.JSONObject;
+
+import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -46,6 +55,7 @@ public class SplashActivity extends AppCompatActivity {
 
         }
     };
+    private String mDownloadUrl;
 
     private void showUpdateDialog() {
         //对话框是依赖于activity存在的
@@ -56,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
         builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) { //下载apk
-
+                downloadApk();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -66,7 +76,66 @@ public class SplashActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                enterHome();
+                dialog.dismiss();
+            }
+        });
         builder.show();
+    }
+
+    private void downloadApk() {
+        //apk下载地址
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"mobilesafe74.apk";
+            HttpUtils http = new HttpUtils();
+            http.download(mDownloadUrl, path, new RequestCallBack<File>() {
+                @Override
+                public void onSuccess(ResponseInfo<File> responseInfo) {
+                    //下载成功
+                    Log.d(TAG, "onSuccess: 下载成功");
+                    File file = responseInfo.result;
+                    installApk(file);
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    //下载失败
+                    Log.d(TAG, "onSuccess: 下载失败");
+                }
+
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    Log.d(TAG, "onStart: 开始下载");
+                }
+
+                @Override
+                public void onLoading(long total, long current, boolean isUploading) {
+                    super.onLoading(total, current, isUploading);
+                    Log.d(TAG, "onLoading: "+current/total);
+                }
+            });
+
+        }
+    }
+
+    private void installApk(File file) {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        // 由于没有在Activity环境下启动Activity,设置下面的标签
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
+        startActivityForResult(intent, 1);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        enterHome();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void enterHome() {
@@ -86,6 +155,8 @@ public class SplashActivity extends AppCompatActivity {
         initUI();
         initData();
     }
+
+
 
     private void initData() {
         PackageManager pm = getPackageManager();
@@ -125,6 +196,7 @@ public class SplashActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(json);
                         String versionName = jsonObject.getString("versionName");
                         mVersionDes = jsonObject.getString("versionDescription");
+                        mDownloadUrl = jsonObject.getString("downloadUrl");
                         if (mVersionCode < Integer.parseInt(versionName)) {
                             msg.what = UPDATE_VERSION;
                         } else {
