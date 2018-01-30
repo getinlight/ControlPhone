@@ -4,14 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.getinlight.controlphone.activity.HomeActivity">
+    tools:context="com.getinlight.controlphone.activity.HomeActivity"
+    android:orientation="vertical">
     
     <TextView
-        android:text="HomeActivity"
-        android:textSize="20sp"
+        android:text="功能列表"
+        style="@style/TitleStyle"/>
+
+    <!--<TextView-->
+        <!--android:text="秋天悄悄过去, 留下小秘密, 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"-->
+        <!--android:textColor="#000"-->
+        <!--android:textSize="15sp"-->
+        <!--android:singleLine="true"-->
+        <!--android:padding="5dp"-->
+        <!--android:ellipsize="marquee"-->
+        <!--android:focusable="true"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:marqueeRepeatLimit="marquee_forever"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <com.getinlight.controlphone.view.FocusTextView
+        android:text="秋天悄悄过去, 留下小秘密, 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
         android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:padding="5dp"
+        android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <GridView
+        android:id="@+id/gv_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="10dp">
+
+    </GridView>
 
 </LinearLayout>

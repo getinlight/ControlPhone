@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.getinlight.controlphone.activity.SettingActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="设置中心"
+        style="@style/TitleStyle"/>
+
+    <com.getinlight.controlphone.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.getinlight.controlphone.view.SettingItemView>
+
+    <com.getinlight.controlphone.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.getinlight.controlphone.view.SettingItemView>
+
+    <com.getinlight.controlphone.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.getinlight.controlphone.view.SettingItemView>
+
+    <com.getinlight.controlphone.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.getinlight.controlphone.view.SettingItemView>
+
+    <com.getinlight.controlphone.view.SettingItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.getinlight.controlphone.view.SettingItemView>
+
+
+</LinearLayout>

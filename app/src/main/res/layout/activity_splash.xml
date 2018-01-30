@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.getinlight.controlphone.activity.SplashActivity"
-    android:background="@drawable/launcher_bg">
+    android:background="@drawable/launcher_bg"
+    android:id="@+id/rl_root">
 
     <!-- android:shadowRadius="1" 阴影所在范围 -->
 

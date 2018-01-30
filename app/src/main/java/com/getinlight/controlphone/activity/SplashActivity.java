@@ -13,6 +13,9 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.utils.StreamUtil;
@@ -56,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
     private String mDownloadUrl;
+    private RelativeLayout rl_root;
 
     private void showUpdateDialog() {
         //对话框是依赖于activity存在的
@@ -154,8 +158,15 @@ public class SplashActivity extends AppCompatActivity {
 
         initUI();
         initData();
+        //初始化动画
+        initAnimation();
     }
 
+    private void initAnimation() {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(3000);
+        rl_root.startAnimation(alphaAnimation);
+    }
 
 
     private void initData() {
@@ -233,6 +244,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void initUI() {
         tv_version_name = findViewById(R.id.tv_version_name);
+        rl_root = findViewById(R.id.rl_root);
     }
 
     @Override
