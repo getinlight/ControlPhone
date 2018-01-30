@@ -11,34 +11,13 @@
         style="@style/TitleStyle"/>
 
     <com.getinlight.controlphone.view.SettingItemView
+        android:id="@+id/siv_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </com.getinlight.controlphone.view.SettingItemView>
 
-    <com.getinlight.controlphone.view.SettingItemView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </com.getinlight.controlphone.view.SettingItemView>
-
-    <com.getinlight.controlphone.view.SettingItemView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.getinlight.controlphone.view.SettingItemView>
-
-    <com.getinlight.controlphone.view.SettingItemView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.getinlight.controlphone.view.SettingItemView>
-
-    <com.getinlight.controlphone.view.SettingItemView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.getinlight.controlphone.view.SettingItemView>
 
 
 </LinearLayout>
