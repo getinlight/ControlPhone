@@ -1,6 +1,7 @@
 package com.getinlight.controlphone.activity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -18,6 +19,8 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.getinlight.controlphone.R;
+import com.getinlight.controlphone.utils.ConstantValue;
+import com.getinlight.controlphone.utils.SpUtil;
 import com.getinlight.controlphone.utils.StreamUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -174,11 +177,14 @@ public class SplashActivity extends AppCompatActivity {
         try {
             PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 0);
             tv_version_name.setText("版本名称: "+packageInfo.versionName);
-            //监测更新
-            int mVersionCode = packageInfo.versionCode;
 
-            checkVersion(mVersionCode);
-
+            if (SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE, false)) {
+                //监测更新
+                int mVersionCode = packageInfo.versionCode;
+                checkVersion(mVersionCode);
+            } else {
+                mHandler.sendEmptyMessageDelayed(ENTER_HOME, 4000);
+            }
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
