@@ -14,7 +14,6 @@
 
     <TextView
         android:id="@+id/tv_des"
-        android:text="自动更新已关闭"
         android:layout_below="@+id/tv_title"
         android:textColor="#777"
         android:textSize="18sp"

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="com.getinlight.controlphone.view.SettingItemView">
+        <attr name="desTitle" format="string"/>
+        <attr name="desOff" format="string"/>
+        <attr name="desOn" format="string"/>
+    </declare-styleable>
+</resources>
