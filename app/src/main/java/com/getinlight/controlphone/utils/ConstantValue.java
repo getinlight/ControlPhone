@@ -10,4 +10,6 @@ public class ConstantValue {
     public static final String OPEN_UPDATE = "open_update";
 
     public static final String NAMESPACE = "http://schemas.android.com/apk/res-auto";
+    /*是否设置密码*/
+    public static final String PWD = "pwd";
 }
