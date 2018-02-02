@@ -12,4 +12,6 @@ public class ConstantValue {
     public static final String NAMESPACE = "http://schemas.android.com/apk/res-auto";
     /*是否设置密码*/
     public static final String PWD = "pwd";
+    /*是否设置完成导航界面*/
+    public static final String SETUP_OVER = "setup_over";
 }

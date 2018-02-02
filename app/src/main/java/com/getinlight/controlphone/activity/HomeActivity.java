@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.utils.ConstantValue;
+import com.getinlight.controlphone.utils.MD5Util;
 import com.getinlight.controlphone.utils.SpUtil;
 import com.getinlight.controlphone.utils.ToastUtil;
 
@@ -89,8 +90,9 @@ public class HomeActivity extends AppCompatActivity {
                     } else {
                         if (et_pwd.getText().toString().equals(et_confirmPwd.getText().toString())) {
                             alertDialog.dismiss();
-                            SpUtil.putString(getApplicationContext(), ConstantValue.PWD, et_pwd.getText().toString());
-                            Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                            SpUtil.putString(getApplicationContext(), ConstantValue.PWD, MD5Util.encode(et_pwd.getText().toString()));
+//                            Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                            Intent intent = new Intent(HomeActivity.this, SetupOverActivity.class);
                             startActivity(intent);
                         } else {
                             ToastUtil.show(getApplicationContext(), "输入密码有误");
@@ -106,7 +108,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
 
-            alertDialog.setView(view);
+//            alertDialog.setView(view);
+            alertDialog.setView(view, 0,0,0,0);
             alertDialog.show();
 
         } else {  //2.确认密码框
@@ -125,9 +128,10 @@ public class HomeActivity extends AppCompatActivity {
                     if (TextUtils.isEmpty(et_pwd.getText().toString())) {
                         ToastUtil.show(getApplicationContext(), "请输入密码");
                     } else {
-                        if (et_pwd.getText().toString().equals(SpUtil.getString(getApplicationContext(), ConstantValue.PWD, ""))) {
+                        if (MD5Util.encode(et_pwd.getText().toString()).equals(SpUtil.getString(getApplicationContext(), ConstantValue.PWD, ""))) {
                             alertDialog.dismiss();
-                            Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+//                            Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                            Intent intent = new Intent(HomeActivity.this, SetupOverActivity.class);
                             startActivity(intent);
                         } else {//错误
                             ToastUtil.show(getApplicationContext(), "输入密码有误");
@@ -143,8 +147,9 @@ public class HomeActivity extends AppCompatActivity {
                     alertDialog.dismiss();
                 }
             });
-
-            alertDialog.setView(view);
+            //为了兼容低版本 内边距为0
+            alertDialog.setView(view, 0,0,0,0);
+//            alertDialog.setView(view);
             alertDialog.show();
         }
 

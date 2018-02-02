@@ -43,7 +43,7 @@ public class SettingItemView extends RelativeLayout {
         tv_des = findViewById(R.id.tv_des);
         cb_box = findViewById(R.id.cb_update);
 
-        //        Log.i(TAG, "initAttrs: "+attrs.getAttributeCount());
+//        Log.i(TAG, "initAttrs: "+attrs.getAttributeCount());
 //        for (int i = 0; i < attrs.getAttributeCount(); i++) {
 //            Log.i(TAG, "initAttrs: key = "+attrs.getAttributeName(i));
 //            Log.i(TAG, "initAttrs: value = "+attrs.getAttributeValue(i));
