@@ -14,4 +14,5 @@ public class ConstantValue {
     public static final String PWD = "pwd";
     /*是否设置完成导航界面*/
     public static final String SETUP_OVER = "setup_over";
+    public static final String SIM_NUMBER = "sim_number";
 }

@@ -38,4 +38,9 @@ public class SpUtil {
         }
         return sp.getString(key, defValue);
     }
+
+
+    public static void remove(Context context, String s) {
+        sp.edit().remove(s).apply();
+    }
 }

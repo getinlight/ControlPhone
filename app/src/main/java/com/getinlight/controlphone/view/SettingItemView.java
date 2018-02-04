@@ -61,6 +61,10 @@ public class SettingItemView extends RelativeLayout {
         return cb_box.isChecked();
     }
 
+    /**
+     * 设置checked
+     * @param checked
+     */
     public void setChecked(boolean checked) {
         cb_box.setChecked(checked);
         if (checked) {
