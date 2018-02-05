@@ -23,6 +23,7 @@
     <EditText
         android:id="@+id/et_phone_num"
         android:hint="请输入电话号码"
+        android:inputType="phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

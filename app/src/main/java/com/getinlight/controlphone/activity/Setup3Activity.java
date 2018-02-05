@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.getinlight.controlphone.R;
+import com.getinlight.controlphone.utils.ConstantValue;
+import com.getinlight.controlphone.utils.SpUtil;
+import com.getinlight.controlphone.utils.ToastUtil;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -37,6 +40,9 @@ public class Setup3Activity extends AppCompatActivity {
                 startActivityForResult(intent, PICK_CONTACT_REQUEST);
             }
         });
+
+        et_phone_num.setText(SpUtil.getString(this, ConstantValue.CONTACT_PHONE, ""));
+
     }
 
     @Override
@@ -83,14 +89,15 @@ public class Setup3Activity extends AppCompatActivity {
     }
 
     public void nextPage(View v) {
-        Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
-        startActivity(intent);
-
-        finish();
+        String phone = et_phone_num.getText().toString().replaceAll(" ", "");
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.show(this, "您没有设置联系人手机号");
+        } else {
+            SpUtil.putString(getApplicationContext(), ConstantValue.CONTACT_PHONE, phone);
+            Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
-    private class NameAndPhone {
-        public String name;
-        public String phone;
-    }
 }
