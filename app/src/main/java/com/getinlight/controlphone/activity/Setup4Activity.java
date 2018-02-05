@@ -24,11 +24,11 @@ public class Setup4Activity extends AppCompatActivity {
         cb_box.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_SACURITY, cb_box.isChecked());
+                SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, cb_box.isChecked());
             }
         });
 
-        SpUtil.getBoolean(this, ConstantValue.OPEN_SACURITY, false);
+        SpUtil.getBoolean(this, ConstantValue.OPEN_SECURITY, false);
     }
 
     public void prePage(View v) {
