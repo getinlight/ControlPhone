@@ -20,5 +20,6 @@ public class Setup1Activity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
+        overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
     }
 }
