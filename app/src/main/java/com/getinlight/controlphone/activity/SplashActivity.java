@@ -1,7 +1,5 @@
 package com.getinlight.controlphone.activity;
 
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.getinlight.controlphone.R;
@@ -30,6 +27,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -163,6 +162,40 @@ public class SplashActivity extends AppCompatActivity {
         initData();
         //初始化动画
         initAnimation();
+        initDB("address.db");
+    }
+
+    private void initDB(String name) {
+        InputStream inputStream = null;
+        FileOutputStream fileOutputStream = null;
+        try {
+            inputStream = getAssets().open(name);
+            File file = getFilesDir();
+            File dbFile = new File(file, name);
+            if (!dbFile.exists()) {
+                fileOutputStream = new FileOutputStream(dbFile);
+                byte[] bs = new byte[1024];
+                int temp = -1;
+                while ((temp = inputStream.read(bs)) != -1) {
+                    fileOutputStream.write(bs, 0, temp);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+            try {
+                if(inputStream!=null && fileOutputStream!=null){
+                    inputStream.close();
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 
     private void initAnimation() {

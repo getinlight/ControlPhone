@@ -56,9 +56,13 @@ public class HomeActivity extends AppCompatActivity {
                     case 0:
                         showDialog();
                         break;
+                    case 7:
+                        Intent intent7 = new Intent(getApplicationContext(), ToolActivity.class);
+                        startActivity(intent7);
+                        break;
                     case 8:
-                        Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-                        startActivity(intent);
+                        Intent intent8 = new Intent(getApplicationContext(), SettingActivity.class);
+                        startActivity(intent8);
                         break;
                     default:
                         break;

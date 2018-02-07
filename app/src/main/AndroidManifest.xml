@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -29,6 +30,8 @@
         <activity android:name=".activity.Setup2Activity" />
         <activity android:name=".activity.Setup3Activity" />
         <activity android:name=".activity.Setup4Activity" />
+        <activity android:name=".activity.ToolActivity" />
+        <activity android:name=".activity.QureyAddressActivity"></activity>
     </application>
 
 </manifest>
