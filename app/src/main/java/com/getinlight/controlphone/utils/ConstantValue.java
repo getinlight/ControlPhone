@@ -17,4 +17,5 @@ public class ConstantValue {
     public static final String SIM_NUMBER = "sim_number";
     public static final String CONTACT_PHONE = "contact_phone";
     public static final String OPEN_SECURITY = "open_security";
+    public static final String ADDRESS_STYLE = "address_style";
 }

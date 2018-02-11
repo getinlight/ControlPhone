@@ -2,7 +2,6 @@ package com.getinlight.controlphone.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -34,9 +33,9 @@ public class SettingItemView extends RelativeLayout {
 
     public SettingItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        View.inflate(context, R.layout.setting_item_view, this);
+        View.inflate(context, R.layout.view_setting_item, this);
 
-//        View view = View.inflate(context, R.layout.setting_item_view, this);
+//        View view = View.inflate(context, R.layout.view_setting_item, this);
 //        this.addView(view);
 
         tv_title = findViewById(R.id.tv_title);

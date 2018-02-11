@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
 
     <application
         android:allowBackup="true"
@@ -15,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +34,20 @@
         <activity android:name=".activity.Setup3Activity" />
         <activity android:name=".activity.Setup4Activity" />
         <activity android:name=".activity.ToolActivity" />
-        <activity android:name=".activity.QureyAddressActivity"></activity>
+        <activity android:name=".activity.QureyAddressActivity" />
+
+        <service
+            android:name=".service.AddressService"
+            android:enabled="true"
+            android:exported="false">
+
+        </service>
+
+        <!--<receiver android:name=".receiver.OutCallReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.NEW_OUTGOING_CALL"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

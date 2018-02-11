@@ -39,6 +39,19 @@ public class SpUtil {
         return sp.getString(key, defValue);
     }
 
+    public static void putInt(Context ctx, String key, int value) {
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        sp.edit().putInt(key, value).apply();
+    }
+
+    public static int getInt(Context ctx, String key, int defValue) {
+        if (sp == null) {
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        return sp.getInt(key, defValue);
+    }
 
     public static void remove(Context context, String s) {
         sp.edit().remove(s).apply();
