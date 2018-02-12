@@ -3,14 +3,132 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:textSize="20sp"
-        android:textColor="#000"
-        android:text="设置完成界面"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/TitleStyle"
+        android:text="手机防盗"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="5dp"
+            android:text="安全号码"/>
+
+        <TextView
+            android:id="@+id/tv_safe_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="5dp"
+            android:text="110"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="5dp"
+            android:text="防盗保护是否开启"/>
+
+        <ImageView
+            android:id="@+id/iv_protect"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:src="@drawable/lock"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/tv_reset"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="5dp"
+            android:text="重新进入设置向导"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#aaa">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:textColor="#fff"
+            android:padding="5dp"
+            android:text="功能简介"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:drawableLeft="@android:drawable/star_on"
+        android:gravity="center_vertical"
+        android:text="GPS追踪: #*location*#"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:drawableLeft="@android:drawable/star_on"
+        android:gravity="center_vertical"
+        android:text="GPS追踪: #*alarm*#"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:drawableLeft="@android:drawable/star_on"
+        android:gravity="center_vertical"
+        android:text="GPS追踪: #*wipedata*#"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:drawableLeft="@android:drawable/star_on"
+        android:gravity="center_vertical"
+        android:text="GPS追踪: #*lockscreen*#"/>
 
 </LinearLayout>
