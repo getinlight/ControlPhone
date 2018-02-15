@@ -30,5 +30,4 @@ public class FocusTextView extends TextView {
         return true;
     }
 
-
 }

@@ -18,4 +18,6 @@ public class ConstantValue {
     public static final String CONTACT_PHONE = "contact_phone";
     public static final String OPEN_SECURITY = "open_security";
     public static final String ADDRESS_STYLE = "address_style";
+    public static final String LOCATION_X = "location_x";
+    public static final String LOCATION_Y = "location_y";
 }

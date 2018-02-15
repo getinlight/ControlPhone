@@ -5,12 +5,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.provider.Telephony;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.engine.AddressDao;
 import com.getinlight.controlphone.utils.ConstantValue;
 import com.getinlight.controlphone.utils.SpUtil;
-import com.getinlight.controlphone.utils.ToastUtil;
 
 /**
  * 来电提醒服务
@@ -30,7 +28,7 @@ public class AddressService extends Service {
     private MyListener listener;
     private OutCallReceiver receiver;
     private WindowManager mWN;
-    private View view;
+    private View mViewToast;
 
     @Override
     public void onCreate() {
@@ -72,23 +70,28 @@ public class AddressService extends Service {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         params.format = PixelFormat.TRANSLUCENT;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        //在响铃的时候显示吐司,和电话一致
+        params.type = WindowManager.LayoutParams.TYPE_PHONE;
+        //制定吐司位置
+        params.gravity = Gravity.LEFT+Gravity.TOP;
         params.setTitle("Toast");
 
-//        view = new TextView(this);
-        view = View.inflate(this, R.layout.toast_address, null);
-        int[] bgs = new int[]{R.drawable.call_locate_white,
-                R.drawable.call_locate_orange,R.drawable.call_locate_blue,
-                R.drawable.call_locate_gray,R.drawable.call_locate_green};
+        //吐司显示效果
+        mViewToast = View.inflate(this, R.layout.toast_address, null);
+        int[] bgs = new int[]{
+                R.drawable.call_locate_white,
+                R.drawable.call_locate_orange,
+                R.drawable.call_locate_blue,
+                R.drawable.call_locate_gray,
+                R.drawable.call_locate_green};
         int style = SpUtil.getInt(this, ConstantValue.ADDRESS_STYLE, 0);
-        view.setBackgroundResource(bgs[style]);
-        TextView tv = view.findViewById(R.id.tv_number);
+        mViewToast.setBackgroundResource(bgs[style]);
+        TextView tv = mViewToast.findViewById(R.id.tv_number);
         tv.setText(text);
-        mWN.addView(view, params);
+        mWN.addView(mViewToast, params);
     }
 
     class MyListener extends PhoneStateListener {
@@ -103,9 +106,9 @@ public class AddressService extends Service {
                     showToast(address);
                     break;
                 case TelephonyManager.CALL_STATE_IDLE:
-                    if (mWN != null && view != null) {
-                        mWN.removeView(view);
-                        view = null;
+                    if (mWN != null && mViewToast != null) {
+                        mWN.removeView(mViewToast);
+                        mViewToast = null;
                     }
                     break;
                 default:

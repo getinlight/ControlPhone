@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -36,16 +37,17 @@
         <activity android:name=".activity.Setup4Activity" />
         <activity android:name=".activity.ToolActivity" />
         <activity android:name=".activity.QureyAddressActivity" />
+        <activity android:name=".activity.ToastLocationActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <service
             android:name=".service.AddressService"
             android:enabled="true"
-            android:exported="false"></service>
-
+            android:exported="false" />
         <service
             android:name=".service.LocationService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <!-- <receiver android:name=".receiver.OutCallReceiver"> -->
         <!-- <intent-filter> -->
@@ -65,6 +67,19 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.DeviceAdmin"
+            android:description="@string/sample_device_admin_description"
+            android:label="@string/sample_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
 

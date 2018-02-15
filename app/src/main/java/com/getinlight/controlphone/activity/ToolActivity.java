@@ -17,7 +17,7 @@ public class ToolActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tool);
 
-        tv_address = findViewById(R.id.tv_address);
+        tv_address = findViewById(R.id.tv_query_address);
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -27,8 +27,8 @@ public class SettingClickView extends RelativeLayout {
 
     public SettingClickView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         View.inflate(context, R.layout.view_setting_click, this);
+
         tv_title = findViewById(R.id.tv_title);
         tv_desc = findViewById(R.id.tv_des);
 

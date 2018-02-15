@@ -169,10 +169,10 @@ public class SplashActivity extends AppCompatActivity {
         InputStream inputStream = null;
         FileOutputStream fileOutputStream = null;
         try {
-            inputStream = getAssets().open(name);
             File file = getFilesDir();
             File dbFile = new File(file, name);
             if (!dbFile.exists()) {
+                inputStream = getAssets().open(name);
                 fileOutputStream = new FileOutputStream(dbFile);
                 byte[] bs = new byte[1024];
                 int temp = -1;
@@ -194,7 +194,6 @@ public class SplashActivity extends AppCompatActivity {
             }
 
         }
-
 
     }
 

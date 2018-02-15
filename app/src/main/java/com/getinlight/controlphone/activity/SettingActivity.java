@@ -20,6 +20,7 @@ public class SettingActivity extends AppCompatActivity {
     private String[] items = new String[]{"半透明","活力橙","卫士蓝","金属灰","苹果绿"};//归属地显示风格样式名称数组
     private int style;//缓存的样式
     private SettingClickView scv_address;
+    private SettingClickView scv_address_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,22 @@ public class SettingActivity extends AppCompatActivity {
         initUpdateView();
         initAddressView();
         initAddressStyleView();
+        initAddressLocation();
 
         style = SpUtil.getInt(this, ConstantValue.ADDRESS_STYLE, 0);
 
+    }
+
+    private void initAddressLocation() {
+        scv_address_location = findViewById(R.id.scv_address_location);
+        scv_address_location.setTitle("归属地提示框位置");
+        scv_address_location.setDesc("设置归属地提示框位置");
+        scv_address_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ToastLocationActivity.class));
+            }
+        });
     }
 
     private void initAddressStyleView() {
@@ -48,7 +62,7 @@ public class SettingActivity extends AppCompatActivity {
 
     private void showSingleChooseDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.drawable.ic_launcher_background);
+        builder.setIcon(R.drawable.setup1);
         builder.setTitle("归属地提示风格");
         builder.setSingleChoiceItems(items, style, new DialogInterface.OnClickListener() {
             @Override
