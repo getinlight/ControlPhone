@@ -5,6 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
@@ -24,6 +27,7 @@ public class BlackNumberService extends Service {
 
     private TelephonyManager tm;
     private BlackNumberService.MyListener listener;
+    private MyContentObserver myContentObserver;
 
     @Override
     public void onCreate() {
@@ -44,6 +48,12 @@ public class BlackNumberService extends Service {
         super.onDestroy();
         if (receiver != null) {
             unregisterReceiver(receiver);
+        }
+        if (myContentObserver != null) {
+            getContentResolver().unregisterContentObserver(myContentObserver);
+        }
+        if (listener != null) {
+            tm.listen(listener, PhoneStateListener.LISTEN_NONE);
         }
     }
 
@@ -114,7 +124,31 @@ public class BlackNumberService extends Service {
                 e.printStackTrace();
             }
 
+            //删除通信记录
+            //通过内容观察者, 观察数据库的变化 通过内容观察者, 观察数据库的变化
+            myContentObserver = new MyContentObserver(new Handler(), incomingNumber);
+            getContentResolver().registerContentObserver(Uri.parse("content://call_log/calls"),
+                    true, myContentObserver);
+
         }
 
+    }
+
+    class MyContentObserver extends ContentObserver {
+
+        private String phone;
+
+        public MyContentObserver(Handler handler, String phone) {
+            super(handler);
+            this.phone = phone;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            //内容解析器
+            getContentResolver().delete(Uri.parse("content://call_log/calls"),
+                    "number = ?", new String[]{phone});
+        }
     }
 }
