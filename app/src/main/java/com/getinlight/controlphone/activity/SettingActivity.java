@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.getinlight.controlphone.R;
+import com.getinlight.controlphone.db.dao.BlackNumberDao;
 import com.getinlight.controlphone.service.AddressService;
+import com.getinlight.controlphone.service.BlackNumberService;
 import com.getinlight.controlphone.utils.ConstantValue;
 import com.getinlight.controlphone.utils.ServiceStatusUtil;
 import com.getinlight.controlphone.utils.SpUtil;
@@ -21,6 +23,7 @@ public class SettingActivity extends AppCompatActivity {
     private int style;//缓存的样式
     private SettingClickView scv_address;
     private SettingClickView scv_address_location;
+    private SettingItemView siv_blacknumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +34,28 @@ public class SettingActivity extends AppCompatActivity {
         initAddressView();
         initAddressStyleView();
         initAddressLocation();
+        initBlackNumber();
 
         style = SpUtil.getInt(this, ConstantValue.ADDRESS_STYLE, 0);
 
+    }
+
+    private void initBlackNumber() {
+        siv_blacknumber = findViewById(R.id.siv_blacknumber);
+        boolean isRunning = ServiceStatusUtil.isServiceRunning(this, "com.getinlight.controlphone.service.BlackNumberService");
+        siv_blacknumber.setChecked(isRunning);
+        siv_blacknumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked = siv_blacknumber.isChecked();
+                siv_blacknumber.setChecked(!checked);
+                if (!checked) {
+                    startService(new Intent(getApplicationContext(), BlackNumberService.class));
+                } else {
+                    stopService(new Intent(getApplicationContext(), BlackNumberService.class));
+                }
+            }
+        });
     }
 
     private void initAddressLocation() {

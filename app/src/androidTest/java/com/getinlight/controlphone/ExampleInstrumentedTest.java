@@ -3,10 +3,12 @@ package com.getinlight.controlphone;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import com.getinlight.controlphone.db.dao.BlackNumberDao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.InstrumentationRegistry.getContext;
 import static org.junit.Assert.*;
 
 /**
@@ -23,4 +25,12 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.getinlight.controlphone", appContext.getPackageName());
     }
+
+    //这个地方的测试用例没有通过  目前我也不知道如何搜索这个问题
+    @Test
+    public void insert() {
+        BlackNumberDao dao = BlackNumberDao.getInstance(getContext());
+        dao.insert("110", "1");
+    }
+
 }

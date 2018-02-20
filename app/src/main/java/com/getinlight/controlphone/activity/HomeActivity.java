@@ -56,6 +56,10 @@ public class HomeActivity extends AppCompatActivity {
                     case 0:
                         showDialog();
                         break;
+                    case 1:
+                        Intent intent1 = new Intent(getApplicationContext(), BlackNumberActivity.class);
+                        startActivity(intent1);
+                        break;
                     case 7:
                         Intent intent7 = new Intent(getApplicationContext(), ToolActivity.class);
                         startActivity(intent7);
