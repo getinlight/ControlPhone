@@ -1,15 +1,11 @@
 package com.getinlight.controlphone.engine;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Xml;
-
 import org.xmlpull.v1.XmlSerializer;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -19,7 +15,7 @@ import java.io.IOException;
 
 public class SmsBackup {
 
-    public static void backup(Context ctx, String path, ProgressDialog dialog) {
+    public static void backup(Context ctx, String path, CallBack callback) {
         File file = new File(path);
         FileOutputStream fos = null;
         Cursor cursor = null;
@@ -32,8 +28,11 @@ public class SmsBackup {
             serializer.setOutput(fos, "utf-8");
             serializer.startDocument("utf-8", true);
             serializer.startTag(null, "smss");
+            int max = cursor.getCount();
+            if (callback != null) {
+                callback.setMax(max);
+            }
 
-            dialog.setMax(cursor.getCount());
 
             int index = 0;
 
@@ -58,7 +57,10 @@ public class SmsBackup {
 
                 index++;
                 //progressdialog 可以在子线程中更新进度条的改变
-                dialog.setProgress(index);
+                if (callback != null) {
+                    callback.setProgress(index);
+                }
+
             }
 
             serializer.endTag(null, "smss");
@@ -66,7 +68,6 @@ public class SmsBackup {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            dialog.dismiss();
             if (cursor != null) {
                 cursor.close();
             }
@@ -77,5 +78,18 @@ public class SmsBackup {
             }
         }
 
+    }
+
+    //回调
+    //1.定义一个借口
+    //2.定义借口中未实现的业务逻辑方法
+    //3.传递一个实现了此借口的类对象, 接口的实现类一定实现了接口方法
+    //4.获取传递进来的对象, 在合适的地方调用
+
+    public interface CallBack {
+        //设置短信总数
+        public void setMax(int max);
+        //备份过程中百分比
+        public void setProgress(int index);
     }
 }

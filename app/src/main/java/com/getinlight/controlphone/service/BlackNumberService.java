@@ -130,6 +130,9 @@ public class BlackNumberService extends Service {
             getContentResolver().registerContentObserver(Uri.parse("content://call_log/calls"),
                     true, myContentObserver);
 
+            //6.删除此被拦截电话号码的通信记录
+//            getContentResolver().delete(Uri.parse("content://call_log/calls"), "number=?", new String[]{incomingNumber});
+
         }
 
     }

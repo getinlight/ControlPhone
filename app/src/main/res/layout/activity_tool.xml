@@ -33,6 +33,13 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@android:drawable/btn_star"/>
 
+    <ProgressBar
+        android:id="@+id/pb_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 
 
 </LinearLayout>

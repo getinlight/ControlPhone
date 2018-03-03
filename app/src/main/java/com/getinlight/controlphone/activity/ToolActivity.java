@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.getinlight.controlphone.R;
@@ -18,6 +19,7 @@ public class ToolActivity extends AppCompatActivity {
 
     private TextView tv_address;
     private TextView tv_sms_backup;
+    private ProgressBar pb_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ToolActivity extends AppCompatActivity {
 
     private void initPhoneAddress() {
         tv_address = findViewById(R.id.tv_query_address);
+        pb_bar = findViewById(R.id.pb_bar);
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,18 +53,28 @@ public class ToolActivity extends AppCompatActivity {
     }
 
     private void showSmsBackupDialog() {
-        ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setIcon(R.drawable.lock);
-        dialog.setTitle("短信备份");
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        dialog.show();
+//        ProgressDialog dialog = new ProgressDialog(this);
+//        dialog.setIcon(R.drawable.lock);
+//        dialog.setTitle("短信备份");
+//        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//        dialog.show();
 
         //短信的获取
         new Thread(){
             @Override
             public void run() {
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"sms74.xml";
-                SmsBackup.backup(getApplicationContext(), path, dialog);
+                SmsBackup.backup(getApplicationContext(), path, new SmsBackup.CallBack() {
+                    @Override
+                    public void setMax(int max) {
+                        pb_bar.setMax(max);
+                    }
+
+                    @Override
+                    public void setProgress(int index) {
+                        pb_bar.setProgress(index);
+                    }
+                });
             }
         }.start();
     }
