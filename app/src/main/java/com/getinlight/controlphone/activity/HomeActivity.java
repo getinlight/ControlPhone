@@ -63,6 +63,9 @@ public class HomeActivity extends AppCompatActivity {
                     case 2:
                         Intent intent2 = new Intent(getApplicationContext(), AppManagerActivity.class);
                         startActivity(intent2);
+                    case 3:
+                        Intent intent3 = new Intent(getApplicationContext(), ProcessManagerActivity.class);
+                        startActivity(intent3);
                         break;
                     case 7:
                         Intent intent7 = new Intent(getApplicationContext(), ToolActivity.class);
