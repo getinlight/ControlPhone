@@ -60,6 +60,10 @@ public class HomeActivity extends AppCompatActivity {
                         Intent intent1 = new Intent(getApplicationContext(), BlackNumberActivity.class);
                         startActivity(intent1);
                         break;
+                    case 2:
+                        Intent intent2 = new Intent(getApplicationContext(), AppManagerActivity.class);
+                        startActivity(intent2);
+                        break;
                     case 7:
                         Intent intent7 = new Intent(getApplicationContext(), ToolActivity.class);
                         startActivity(intent7);

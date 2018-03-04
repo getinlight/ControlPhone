@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.db.dao.BlackNumberDao;
-import com.getinlight.controlphone.db.dao.BlackNumberInfo;
+import com.getinlight.controlphone.domain.BlackNumberInfo;
 
 import java.util.List;
 

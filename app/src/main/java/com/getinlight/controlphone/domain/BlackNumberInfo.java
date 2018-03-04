@@ -1,4 +1,4 @@
-package com.getinlight.controlphone.db.dao;
+package com.getinlight.controlphone.domain;
 
 /**
  * Created by getinlight on 2018/2/19.
