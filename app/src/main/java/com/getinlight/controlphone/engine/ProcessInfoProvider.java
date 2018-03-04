@@ -116,4 +116,8 @@ public class ProcessInfoProvider {
         return processInfoList;
     }
 
+    public static void killProcess(Context ctx, ProcessInfo info) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(info.packageName);
+    }
 }

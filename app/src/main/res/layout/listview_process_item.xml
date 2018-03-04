@@ -20,7 +20,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/tv_path"
+        android:id="@+id/tv_memory_info"
         android:textColor="@android:color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,5 +28,15 @@
         android:layout_toRightOf="@+id/iv_icon"
         android:text="应用安装路径"
         android:textSize="20sp" />
+
+    <CheckBox
+        android:id="@+id/cb_box"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
