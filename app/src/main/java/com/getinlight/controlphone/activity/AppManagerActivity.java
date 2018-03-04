@@ -1,5 +1,10 @@
 package com.getinlight.controlphone.activity;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -9,23 +14,30 @@ import android.os.Bundle;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.domain.AppInfo;
 import com.getinlight.controlphone.engine.AppInfoProvider;
+import com.getinlight.controlphone.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class AppManagerActivity extends AppCompatActivity {
+public class AppManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Object availSpace;
     private List<AppInfo> mAppInfoList;
     private Handler mHandler = new Handler(){
 
@@ -44,6 +56,8 @@ public class AppManagerActivity extends AppCompatActivity {
     private ArrayList<AppInfo> mCustomerList;
     private ArrayList<AppInfo> mSystemList;
     private TextView tv_des;
+    private AppInfo mCurrentAppInfo;
+    private PopupWindow mPopWindow;
 
     class MyAdapter extends BaseAdapter {
 
@@ -135,8 +149,6 @@ public class AppManagerActivity extends AppCompatActivity {
                 return convertView;
             }
 
-
-
         }
     }
 
@@ -154,16 +166,18 @@ public class AppManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
-
+        lv_app_list = findViewById(R.id.lv_app_list);
+        tv_des = findViewById(R.id.tv_des);
         initTitle();
 
         initList();
 
     }
 
-    private void initList() {
-        lv_app_list = findViewById(R.id.lv_app_list);
-        tv_des = findViewById(R.id.tv_des);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //重新获取数据
         new Thread() {
 
             @Override
@@ -181,6 +195,9 @@ public class AppManagerActivity extends AppCompatActivity {
                 mHandler.sendEmptyMessage(0);
             }
         }.start();
+    }
+
+    private void initList() {
 
         lv_app_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -206,6 +223,89 @@ public class AppManagerActivity extends AppCompatActivity {
 
             }
         });
+
+        lv_app_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0 || position == mCustomerList.size() + 1) {
+                    return;
+                } else {
+                    if (position < mCustomerList.size()+1) {
+                        mCurrentAppInfo = mCustomerList.get(position - 1);
+                    } else {
+                        mCurrentAppInfo = mSystemList.get(position - mCustomerList.size() - 2);
+                    }
+                    showPopupWindow(view);
+                }
+            }
+        });
+    }
+
+    private void showPopupWindow(View tapView) {
+        View view = View.inflate(this, R.layout.popupwindiw_layout, null);
+        TextView tv_uninstall = view.findViewById(R.id.tv_uninstall);
+        TextView tv_start = view.findViewById(R.id.tv_start);
+        TextView tv_share = view.findViewById(R.id.tv_share);
+
+        tv_uninstall.setOnClickListener(this);
+        tv_start.setOnClickListener(this);
+        tv_share.setOnClickListener(this);
+
+        //透明变成不透明
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(500);
+        alphaAnimation.setFillAfter(true);
+
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1,
+                Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
+
+        AnimationSet set = new AnimationSet(true);
+        set.addAnimation(alphaAnimation);
+        set.addAnimation(scaleAnimation);
+
+        mPopWindow = new PopupWindow(view, LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setBackgroundDrawable(new ColorDrawable());
+        mPopWindow.showAsDropDown(tapView, 200, -view.getHeight()-150);
+        view.startAnimation(set);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_uninstall:
+                if (mCurrentAppInfo.isSystem()) {
+                    ToastUtil.show(this, "此应用不能卸载");
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_DELETE, Uri.parse("package:"+mCurrentAppInfo.getPackageName()));
+                    startActivity(intent);
+                }
+                break;
+            case R.id.tv_start:
+                PackageManager packageManager = getPackageManager();
+                Intent intent = packageManager.getLaunchIntentForPackage(mCurrentAppInfo.getPackageName());
+                if (intent != null) {
+                    startActivity(intent);
+                } else {
+                    ToastUtil.show(this, "此引用不能被开启");
+                }
+                break;
+            case R.id.tv_share:
+                Intent intent1 = new Intent(Intent.ACTION_SEND);
+                intent1.putExtra(Intent.EXTRA_TEXT, "分享一个应用: "+mCurrentAppInfo.getName());
+                intent1.setType("text/plain");
+                startActivity(intent1);
+                break;
+            default:
+                break;
+
+        }
+
+        if (mPopWindow != null) {
+            mPopWindow.dismiss();
+        }
     }
 
     private void initTitle() {
