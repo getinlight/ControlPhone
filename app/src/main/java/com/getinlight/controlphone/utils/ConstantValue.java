@@ -24,4 +24,5 @@ public class ConstantValue {
      * 是否显示系统进程
      */
     public static final String SHOW_SYSTEM = "show_system";
+    public static final String HAS_SHORTCUT = "has_shortcut";
 }

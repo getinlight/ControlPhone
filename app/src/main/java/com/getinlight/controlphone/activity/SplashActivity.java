@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -163,6 +164,29 @@ public class SplashActivity extends AppCompatActivity {
         //初始化动画
         initAnimation();
         initDB("address.db");
+        initShortCut();
+    }
+
+    /**
+     * 无法使用
+     */
+    private void initShortCut() {
+        if (!SpUtil.getBoolean(this, ConstantValue.HAS_SHORTCUT, false)) {
+            Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+            //维护图标
+            Intent.ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher);
+            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, iconRes);
+            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "黑马卫士74");
+            intent.putExtra("duplicate", false);
+            Intent shortCutIntent = new Intent("android.intent.action.HOME");
+            shortCutIntent.addCategory("android.intent.category.DEFAULT");
+            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortCutIntent);
+            //3.发送广播
+            sendBroadcast(intent);
+
+            SpUtil.putBoolean(this, ConstantValue.HAS_SHORTCUT, true);
+        }
+        
     }
 
     private void initDB(String name) {
@@ -270,13 +294,6 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         }.start();
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
 
     }
 
