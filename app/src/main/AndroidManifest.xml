@@ -98,7 +98,13 @@
             android:exported="true" />
 
         <activity android:name=".activity.AppManagerActivity" />
-        <activity android:name=".activity.ProcessManagerActivity"></activity>
+        <activity android:name=".activity.ProcessManagerActivity" />
+        <activity android:name=".activity.ProcessSettingActivity" />
+
+        <service
+            android:name=".service.LockScreenService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

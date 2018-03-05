@@ -20,4 +20,8 @@ public class ConstantValue {
     public static final String ADDRESS_STYLE = "address_style";
     public static final String LOCATION_X = "location_x";
     public static final String LOCATION_Y = "location_y";
+    /**
+     * 是否显示系统进程
+     */
+    public static final String SHOW_SYSTEM = "show_system";
 }

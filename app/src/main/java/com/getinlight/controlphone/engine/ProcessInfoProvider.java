@@ -120,4 +120,15 @@ public class ProcessInfoProvider {
         ActivityManager am = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
         am.killBackgroundProcesses(info.packageName);
     }
+
+    public static void killAll(Context ctx) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo info : runningAppProcesses) {
+            if (info.processName.equals(ctx.getPackageName())) {
+                continue;
+            }
+            am.killBackgroundProcesses(info.processName);
+        }
+    }
 }

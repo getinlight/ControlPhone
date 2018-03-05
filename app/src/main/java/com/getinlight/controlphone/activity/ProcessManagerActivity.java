@@ -1,5 +1,6 @@
 package com.getinlight.controlphone.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.domain.ProcessInfo;
 import com.getinlight.controlphone.engine.ProcessInfoProvider;
+import com.getinlight.controlphone.utils.ConstantValue;
+import com.getinlight.controlphone.utils.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +74,11 @@ public class ProcessManagerActivity extends AppCompatActivity implements View.On
 
         @Override
         public int getCount() {
-            return mCustomerList.size() + mSystemList.size() + 2;
+            if (SpUtil.getBoolean(getApplicationContext(), ConstantValue.SHOW_SYSTEM, false)) {
+                return mCustomerList.size() + 1;
+            } else {
+                return mCustomerList.size() + mSystemList.size() + 2;
+            }
         }
 
         @Override
@@ -258,6 +265,7 @@ public class ProcessManagerActivity extends AppCompatActivity implements View.On
                 selectReverse();
                 break;
             case R.id.bt_setting:
+                setting();
                 break;
             case R.id.bt_clear:
                 clearAll();
@@ -265,6 +273,17 @@ public class ProcessManagerActivity extends AppCompatActivity implements View.On
             default:
                 break;
         }
+    }
+
+    private void setting() {
+//        startActivity(new Intent(this, ProcessSettingActivity.class));
+        startActivityForResult(new Intent(this, ProcessSettingActivity.class), 0);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        myAdapter.notifyDataSetChanged();
     }
 
     private void clearAll() {
