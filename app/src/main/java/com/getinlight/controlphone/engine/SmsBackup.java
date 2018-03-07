@@ -59,6 +59,9 @@ public class SmsBackup {
                 //progressdialog 可以在子线程中更新进度条的改变
                 if (callback != null) {
                     callback.setProgress(index);
+                    if (index == max) {
+                        callback.dismiss();
+                    }
                 }
 
             }
@@ -91,5 +94,6 @@ public class SmsBackup {
         public void setMax(int max);
         //备份过程中百分比
         public void setProgress(int index);
+        public void dismiss();
     }
 }

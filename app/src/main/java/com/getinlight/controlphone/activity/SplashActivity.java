@@ -125,7 +125,6 @@ public class SplashActivity extends AppCompatActivity {
                     Log.d(TAG, "onLoading: "+current/total);
                 }
             });
-
         }
     }
 
@@ -164,6 +163,7 @@ public class SplashActivity extends AppCompatActivity {
         //初始化动画
         initAnimation();
         initDB("address.db");
+        initDB("commonnum.db");
         initShortCut();
     }
 
@@ -171,22 +171,42 @@ public class SplashActivity extends AppCompatActivity {
      * 无法使用
      */
     private void initShortCut() {
-        if (!SpUtil.getBoolean(this, ConstantValue.HAS_SHORTCUT, false)) {
-            Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
-            //维护图标
-            Intent.ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher);
-            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, iconRes);
-            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "黑马卫士74");
-            intent.putExtra("duplicate", false);
-            Intent shortCutIntent = new Intent("android.intent.action.HOME");
-            shortCutIntent.addCategory("android.intent.category.DEFAULT");
-            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortCutIntent);
-            //3.发送广播
-            sendBroadcast(intent);
+//        if (!SpUtil.getBoolean(this, ConstantValue.HAS_SHORTCUT, false)) {
+//            Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+//            //维护图标
+//            Intent.ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher);
+//            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, iconRes);
+//            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "黑马卫士74");
+//            intent.putExtra("duplicate", false);
+//            Intent shortCutIntent = new Intent("android.intent.action.HOME");
+//            shortCutIntent.addCategory("android.intent.category.DEFAULT");
+//            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortCutIntent);
+//            //3.发送广播
+//            sendBroadcast(intent);
+//            SpUtil.putBoolean(this, ConstantValue.HAS_SHORTCUT, true);
+//        }
 
-            SpUtil.putBoolean(this, ConstantValue.HAS_SHORTCUT, true);
-        }
-        
+        Intent shortcut = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+
+        // 快捷方式的名称
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, "黑马卫士74");
+        shortcut.putExtra("duplicate", false); // 不允许重复创建
+
+        // 快捷方式的图标
+        Intent.ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher);
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconRes);
+
+        Intent intent = new Intent();
+
+        intent.setAction("android.intent.action.MAIN");// 桌面图标和应用绑定，卸载应用后系统会同时自动删除图标
+        intent.addCategory("android.intent.category.LAUNCHER");// 桌面图标和应用绑定，卸载应用后系统会同时自动删除图标
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+
+        sendBroadcast(shortcut);
+
+
     }
 
     private void initDB(String name) {
