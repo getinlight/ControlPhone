@@ -77,6 +77,13 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name=".receiver.KillProcessReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.KILL_BACKGROUND_PROCESS" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name=".receiver.SmsReceiver"
             android:enabled="true">
             <intent-filter>
@@ -128,7 +135,9 @@
         <service
             android:name=".service.UpdateWidgetService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.AppLockActivity"></activity>
     </application>
 
 </manifest>
