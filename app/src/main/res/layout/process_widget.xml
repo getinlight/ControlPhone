@@ -21,6 +21,7 @@
             android:id="@+id/tv_process_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:layout_marginLeft="10.0dip" />
 
         <ImageView
@@ -32,6 +33,7 @@
 
         <TextView
             android:id="@+id/tv_process_memory"
+            android:textColor="@android:color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10.0dip"/>
@@ -57,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textColor="#fff" />
+                android:textColor="#000" />
         </LinearLayout>
 
         <Button

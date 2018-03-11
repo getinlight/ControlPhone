@@ -124,6 +124,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/my_widget_info" />
         </receiver>
+
+        <service
+            android:name=".service.UpdateWidgetService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
