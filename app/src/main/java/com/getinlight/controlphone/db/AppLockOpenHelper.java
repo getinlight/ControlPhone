@@ -16,7 +16,7 @@ public class AppLockOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //创建数据库中表的方法
-        db.execSQL("create table applock (_id integer primary key autoincrement, packagename varchar(20);");
+        db.execSQL("create table applock (_id integer primary key autoincrement, packagename varchar(20))");
 
     }
 
