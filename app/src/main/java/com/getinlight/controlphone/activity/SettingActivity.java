@@ -10,6 +10,7 @@ import android.view.View;
 import com.getinlight.controlphone.R;
 import com.getinlight.controlphone.db.dao.BlackNumberDao;
 import com.getinlight.controlphone.service.AddressService;
+import com.getinlight.controlphone.service.AppLockService;
 import com.getinlight.controlphone.service.BlackNumberService;
 import com.getinlight.controlphone.utils.ConstantValue;
 import com.getinlight.controlphone.utils.ServiceStatusUtil;
@@ -24,6 +25,7 @@ public class SettingActivity extends AppCompatActivity {
     private SettingClickView scv_address;
     private SettingClickView scv_address_location;
     private SettingItemView siv_blacknumber;
+    private SettingItemView siv_app_lock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,28 @@ public class SettingActivity extends AppCompatActivity {
         initAddressStyleView();
         initAddressLocation();
         initBlackNumber();
+        initAppLock();
 
         style = SpUtil.getInt(this, ConstantValue.ADDRESS_STYLE, 0);
 
+    }
+
+    private void initAppLock() {
+        siv_app_lock = findViewById(R.id.siv_app_lock);
+        boolean isRunning = ServiceStatusUtil.isServiceRunning(this, "com.getinlight.controlphone.service.AppLockService");
+        siv_app_lock.setChecked(isRunning);
+        siv_app_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked = siv_app_lock.isChecked();
+                siv_app_lock.setChecked(!checked);
+                if (!checked) {
+                    startService(new Intent(getApplicationContext(), AppLockService.class));
+                } else {
+                    stopService(new Intent(getApplicationContext(), AppLockService.class));
+                }
+            }
+        });
     }
 
     private void initBlackNumber() {

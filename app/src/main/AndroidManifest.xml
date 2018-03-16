@@ -137,7 +137,12 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.AppLockActivity"></activity>
+        <activity android:name=".activity.AppLockActivity" />
+
+        <service
+            android:name=".service.AppLockService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

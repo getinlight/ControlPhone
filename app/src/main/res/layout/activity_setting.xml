@@ -47,5 +47,13 @@
         app:desOff="黑名单拦截已关闭"
         app:desOn="黑名单拦截已开启"/>
 
+    <com.getinlight.controlphone.view.SettingItemView
+        android:id="@+id/siv_app_lock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:desTitle="程序锁设置"
+        app:desOff="程序锁已关闭"
+        app:desOn="程序锁已开启"/>
+
 
 </LinearLayout>
