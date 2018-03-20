@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.getinlight.controlphone.activity.EnterPsdActivity;
 import com.getinlight.controlphone.db.dao.AppLockDao;
 
 import java.util.List;
@@ -36,14 +37,14 @@ public class AppLockService extends Service {
                     //3.获取activity的管理者对象
                     ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                     //4.获取正在开启应用的任务栈
-                    List<ActivityManager.RunningTaskInfo> runningTasks = am.getRunningTasks(1);
-                    ActivityManager.RunningTaskInfo runningTaskInfo = runningTasks.get(0);
+                    List<ActivityManager.RunningTaskInfo> runningTasks = am.getRunningTasks(2);
+                    ActivityManager.RunningTaskInfo runningTaskInfo = runningTasks.get(1);
                     //5.获取栈顶的activity, 获取包名
                     String packageName = runningTaskInfo.topActivity.getPackageName();
                     //6.检查包名是否存在
                     if (allPackageName.contains(packageName)) {
                         //弹出拦截界面
-                        Intent intent = new Intent();
+                        Intent intent = new Intent(getApplicationContext(), EnterPsdActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("packagename", packageName);
                         startActivity(intent);

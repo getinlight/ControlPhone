@@ -142,7 +142,9 @@
         <service
             android:name=".service.AppLockService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.EnterPsdActivity"></activity>
     </application>
 
 </manifest>
