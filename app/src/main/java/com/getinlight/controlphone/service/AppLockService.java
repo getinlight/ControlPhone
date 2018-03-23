@@ -2,7 +2,13 @@ package com.getinlight.controlphone.service;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
 
 import com.getinlight.controlphone.activity.EnterPsdActivity;
@@ -15,6 +21,9 @@ public class AppLockService extends Service {
     private boolean isWatch;
     private AppLockDao dao;
     private List<String> allPackageName;
+    private InnerReceiver receiver;
+    private String skipPackageName;
+    private MyContentObserver myContentObserver;
 
     @Override
     public void onCreate() {
@@ -25,6 +34,39 @@ public class AppLockService extends Service {
         //维护一个看门狗的死循环
         isWatch = true;
         watch();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.SKIP");
+        receiver = new InnerReceiver();
+        registerReceiver(receiver, filter);
+
+
+        myContentObserver = new MyContentObserver(new Handler());
+        getContentResolver().registerContentObserver(Uri.parse("content://applock/change"), true, myContentObserver);
+    }
+
+    class InnerReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            skipPackageName = intent.getStringExtra("packagename");
+        }
+    }
+
+    class MyContentObserver extends ContentObserver {
+        public MyContentObserver(Handler handler) {
+            super(handler);
+        }
+        //当数据库发生改变的时候调用
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            new Thread(){
+                @Override
+                public void run() {
+                    allPackageName = dao.findAll();
+                }
+            }.start();
+        }
     }
 
     private void watch() {
@@ -43,11 +85,13 @@ public class AppLockService extends Service {
                     String packageName = runningTaskInfo.topActivity.getPackageName();
                     //6.检查包名是否存在
                     if (allPackageName.contains(packageName)) {
-                        //弹出拦截界面
-                        Intent intent = new Intent(getApplicationContext(), EnterPsdActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("packagename", packageName);
-                        startActivity(intent);
+                        if (!packageName.equals(skipPackageName)) {
+                            //弹出拦截界面
+                            Intent intent = new Intent(getApplicationContext(), EnterPsdActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("packagename", packageName);
+                            startActivity(intent);
+                        }
                     }
 
                     //睡眠一下
@@ -65,6 +109,13 @@ public class AppLockService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        this.isWatch = false;
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+        }
+        if (myContentObserver != null) {
+            getContentResolver().unregisterContentObserver(myContentObserver);
+        }
     }
 
     @Override

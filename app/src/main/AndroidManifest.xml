@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -144,7 +145,12 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.EnterPsdActivity"></activity>
+        <!-- 不需要显示手机卫士的图标 true是不显示 false是显示 -->
+        <activity
+            android:name=".activity.EnterPsdActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"></activity>
+        <activity android:name=".activity.AntiVirusActivity"></activity>
     </application>
 
 </manifest>

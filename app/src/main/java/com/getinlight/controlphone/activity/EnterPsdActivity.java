@@ -1,5 +1,6 @@
 package com.getinlight.controlphone.activity;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -47,6 +48,9 @@ public class EnterPsdActivity extends AppCompatActivity {
                 String psd = et_psd.getText().toString();
                 if (!TextUtils.isEmpty(psd)) {
                     if (psd.equals("123")) {
+                        Intent intent = new Intent("android.intent.action.SKIP");
+                        intent.putExtra("packagename", packagename);
+                        sendBroadcast(intent);
                         finish();
                     } else {
                         ToastUtil.show(getApplicationContext(), "密码错误");
@@ -57,5 +61,14 @@ public class EnterPsdActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //通过隐私意图调整界面
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }

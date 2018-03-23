@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import com.getinlight.controlphone.db.AppLockOpenHelper;
 import com.getinlight.controlphone.db.BlackNumberOpenHelper;
@@ -20,9 +21,11 @@ import java.util.List;
 public class AppLockDao {
 
     private final AppLockOpenHelper appLockOpenHelper;
+    private final Context context;
 
     //1.私有化构造方法
     private AppLockDao(Context ctx) {
+        this.context = ctx;
         //创建数据库
         appLockOpenHelper = new AppLockOpenHelper(ctx);
     }
@@ -44,6 +47,8 @@ public class AppLockDao {
         db.insert("applock", null, values);
 
         db.close();
+
+        context.getContentResolver().notifyChange(Uri.parse("content://applock/change"), null);
     }
 
     public void delete(String packageName) {
@@ -52,6 +57,8 @@ public class AppLockDao {
         db.delete("applock", "packagename = ?", new String[]{packageName});
 
         db.close();
+
+        context.getContentResolver().notifyChange(Uri.parse("content://applock/change"), null);
     }
 
     public List<String> findAll() {
