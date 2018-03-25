@@ -164,6 +164,7 @@ public class SplashActivity extends AppCompatActivity {
         initAnimation();
         initDB("address.db");
         initDB("commonnum.db");
+        initDB("antivirus.db");
         initShortCut();
     }
 
