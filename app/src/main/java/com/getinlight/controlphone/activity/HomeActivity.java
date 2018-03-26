@@ -68,9 +68,16 @@ public class HomeActivity extends AppCompatActivity {
                         Intent intent3 = new Intent(getApplicationContext(), ProcessManagerActivity.class);
                         startActivity(intent3);
                         break;
+                    case 4:
+                        Intent intent4 = new Intent(getApplicationContext(), TrafficActivity.class);
+                        startActivity(intent4);
+                        break;
                     case 5:
                         Intent intent5 = new Intent(getApplicationContext(), AntiVirusActivity.class);
                         startActivity(intent5);
+                    case 6:
+                        Intent intent6 = new Intent(getApplicationContext(), BaseCacheCleanActivity.class);
+                        startActivity(intent6);
                         break;
                     case 7:
                         Intent intent7 = new Intent(getApplicationContext(), ToolActivity.class);
